@@ -42,6 +42,9 @@ SOURCES += \
         src/entities/player/player.cpp \
         src/entities/vision/vision.cpp \
         src/entities/worldmap/worldmap.cpp \
+        src/team/behavior.cpp \
+        src/team/chaser.cpp \
+        src/team/predictor.cpp \
         src/utils/types/robotcontrolpacket/robotcontrolpacket.cpp \
         src/utils/types/robotdetectionpacket/robotdetectionpacket.cpp \
         src/utils/utils.cpp
@@ -61,6 +64,9 @@ HEADERS += \
     src/entities/player/player.h \
     src/entities/vision/vision.h \
     src/entities/worldmap/worldmap.h \
+    src/team/behavior.h \
+    src/team/chaser.h \
+    src/team/predictor.h \
     src/utils/types/robotcontrolpacket/robotcontrolpacket.h \
     src/utils/types/robotdetectionpacket/robotdetectionpacket.h \
     src/utils/utils.h
