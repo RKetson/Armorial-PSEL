@@ -8,14 +8,14 @@
 class Behavior
 {
 public:
-    Behavior(std::optional<Player*>, WorldMap* wp);
+    Behavior(Player* player, WorldMap* wp);
 
-    std::optional<Player*> getPlayer();
-    WorldMap* getWorldMap();
     void run();
+    WorldMap* getWorldMap();
+    Player* getPlayer();
 
 private:
-    std::optional<Player*> _player;
+    Player* _player;
     WorldMap* _wp;
 };
 

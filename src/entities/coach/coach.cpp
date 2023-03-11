@@ -20,6 +20,9 @@
  ***/
 
 #include "coach.h"
+#include "src/team/behavior.h"
+#include "src/team/chaser.h"
+#include "src/team/predictor.h"
 #include <QDebug>
 
 Coach::Coach(const QMap<bool, QList<Player*>>& players, WorldMap* worldMap)
@@ -51,74 +54,8 @@ WorldMap* Coach::getWorldMap() {
 }
 
 void Coach::runCoach() {
-    // Here you can control the robots freely.
-    // Remember that the getPlayer(color, id) function can return a std::nullopt object, so
-    // be careful when you use it (remember to only use ids from 0-2 and the BLUE and YELLOW
-    // defines).
 
-    // Example 1: here we get the ball position and set the BLUE and YELLOW player 0 to follow it
+    Chaser jogador1(getPlayer(YELLOW, 0).value(), getWorldMap());
+    jogador1.run();
 
-    //QVector2D position(0,0);
-    QVector2D goalPosition = getWorldMap()->theirGoalCenter();
-    QVector2D ballPosition = getWorldMap()->ballPosition();
-    //QVector2D distanceGoal = (goalPosition - ballPosition);
-
-    //float distancePlayerGoal = (distanceGoal - getPlayer(YELLOW, 0).value()->getPosition()).distanceToPoint(zero);
-
-    float radius = getWorldMap()->centerRadius();
-    float cordBall[2] = {getWorldMap()->ballPosition().x(), getWorldMap()->ballPosition().y()};
-    float width = getWorldMap()->width();
-
-    float difDist = width - abs(getWorldMap()->minY() - cordBall[1]);
-
-    if(!getWorldMap()->playingLeftSide()){
-        //if(cordBall[0] - getPlayer(YELLOW, 0).value()->getPosition().x() < 0.8 * radius){
-         //   getPlayer(YELLOW, 0).value()->goTo(ballPosition);
-        //}
-        if(cordBall[0] < getPlayer(YELLOW, 0).value()->getPosition().x()){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition);
-        }else if(difDist > width/2 + radius){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(radius, -radius));
-        }else if(difDist < width/2 - radius){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(radius, radius));
-        }else getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(radius, 0.0));
-
-
-
-
-        /*if(cordBall[1] < radius * 0.7){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(radius, 0.0));
-        }
-        else if(abs(cordBall[1] - getWorldMap()->minY()) >= abs(cordBall[1] - getWorldMap()->maxY())){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(radius, -radius));
-        }else{
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(radius, radius));
-        }
-        */
-    }else{
-        if(goalPosition.distanceToPoint(ballPosition) < getWorldMap()->theirGoalLeftPost().distanceToPoint(ballPosition) || goalPosition.distanceToPoint(ballPosition) < getWorldMap()->theirGoalRightPost().distanceToPoint(ballPosition   )){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(-radius, 0.0));
-        }
-        else if(abs(cordBall[1] - getWorldMap()->minY()) >= abs(cordBall[1] - getWorldMap()->maxY())){
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(-radius, -radius));
-        }else{
-            getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(-radius, radius));
-        }
-    }
-    //float position[2];
-
-    //(abs(cordBall[1] - getWorldMap()->minY()) >= abs(cordBall[1] - getWorldMap()->maxY())) ? position[1] = (cordBall[1] - radius) : position[1] = (cordBall[1] + radius);
-
-    //float distancePlayerGoal = (distanceGoal - getPlayer(YELLOW, 0).value()->getPosition()).distanceToPoint(zero);
-
-    //position[0] = (cordBall[0] - radius * cordGoal[0] / abs(cordGoal[0]));
-
-    //getPlayer(BLUE, 0).value()->goTo(ballPosition);
-    //getPlayer(YELLOW, 0).value()->goTo(ballPosition + QVector2D(0.25,0.25 * cordGoal[0] / abs(cordGoal[0])));
-
-    // Example 2: here we set the BLUE and YELLOW players 1 and 2 to rotate to the ball
-    //getPlayer(BLUE, 1).value()->rotateTo(ballPosition);
-    //getPlayer(BLUE, 2).value()->rotateTo(ballPosition);
-    //getPlayer(YELLOW, 1).value()->rotateTo(ballPosition);
-    //getPlayer(YELLOW, 2).value()->rotateTo(ballPosition);
 }

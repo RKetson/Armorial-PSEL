@@ -7,8 +7,6 @@ class Chaser : public Behavior
 {
 public:
     using Behavior::Behavior;
-
-private:
     void run();
 };
 
