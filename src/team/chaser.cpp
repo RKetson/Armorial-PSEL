@@ -1,4 +1,5 @@
 #include "chaser.h"
+#include <QDebug>
 
 void Chaser::run(){
 
@@ -8,9 +9,12 @@ void Chaser::run(){
 
     static States state = ST_Search;
 
+    qDebug() << state;
+
     int a;
     WorldMap* wp = getWorldMap();
     Player* chaser = getPlayer();
+
     // Indica qual lado do jogo estamos jogando
     wp->playingLeftSide() ? a = -1 : a = 1;
 
@@ -21,25 +25,18 @@ void Chaser::run(){
     float radius = wp->centerRadius();
     //Distância da bola até o player
     float dist_PB[2] = {chaser->getPosition().x() - ball.x(), chaser->getPosition().y() - ball.y()};
+
     //Máquina de estado para chutar a bola
     switch(state){
-        //Verifica se o jogador está atrás da bola
-//        case ST_Search: {
-
-//            if(ball.x() > a*yellow->getPosition().x()) state = ST_Detour;
-//            else state = ST_Ajust;
-
-//        break;
-//        }
 
         //Vai atrás da bola
         case ST_Search: {
 
-            if(distY > width/2) chaser->goTo(ball + QVector2D(a * radius, radius));
-            else if(distY < width/2) chaser->goTo(ball + QVector2D(a * radius, -radius));
+            if(distY > width/2) go(chaser, ball + QVector2D(a * radius, radius));
+            else if(distY < width/2) go(chaser, ball + QVector2D(a * radius, -radius));
             else{
-                if(width/2 - chaser->getPosition().y() > width/2) chaser->goTo(ball + QVector2D(a * radius, -radius));
-                else chaser->goTo(ball + QVector2D(a * radius, radius));
+                if(width/2 - chaser->getPosition().y() > width/2) go(chaser, ball + QVector2D(a * radius, -radius));
+                else go(chaser, ball + QVector2D(a * radius, radius));
             }
 
             if(((dist_PB[0] * a > radius * 0.8) && (dist_PB[0] * a < radius * 1.2)) && (abs(dist_PB[1]) < radius * 1.2)) state = ST_Ajust;
@@ -54,7 +51,7 @@ void Chaser::run(){
             float player_y = abs(chaser->getPosition().y());
 
             if((player_y < width_goal) && !(player_y < 0.06))
-                chaser->goTo(ball + QVector2D(a * radius, 0));
+                go(chaser, ball + QVector2D(a * radius, 0));
             else state = ST_Goal;
 
         break;
@@ -63,7 +60,7 @@ void Chaser::run(){
         //Chuta a bola
         case ST_Goal: {
 
-            chaser->goTo(ball);
+            go(chaser, ball);
 
             if((ball - chaser->getPosition()).distanceToPoint(chaser->getPosition()) > 3 * radius)
                 state = ST_Back;
@@ -74,9 +71,9 @@ void Chaser::run(){
         //Volta pra o lado campo após chutar a bola
         case ST_Back: {
 
-            chaser->goTo(QVector2D(a * 1.2 * radius, 0));
+            go(chaser, QVector2D(a * 1.2 * radius, 0));
 
-            if(chaser->getPosition().x() > a * radius)
+            if(a * chaser->getPosition().x() > radius)
                 state = ST_Search;
 
         break;

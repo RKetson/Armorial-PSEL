@@ -14,6 +14,11 @@ public:
     WorldMap* getWorldMap();
     Player* getPlayer();
 
+protected:
+    void go(Player* player, QVector2D targetPosition);
+    void rotate(Player* player, QVector2D targetPosition);
+    void rotate(Player* player, float orientation);
+
 private:
     Player* _player;
     WorldMap* _wp;

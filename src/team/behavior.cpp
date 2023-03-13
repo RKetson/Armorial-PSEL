@@ -5,6 +5,18 @@ Behavior::Behavior(Player* player, WorldMap *wp)
 {
 }
 
+void Behavior::go(Player* player, QVector2D targetPosition){
+    player->goTo(targetPosition);
+}
+
+void Behavior::rotate(Player* player, QVector2D targetPosition){
+    player->rotateTo(targetPosition);
+}
+
+void Behavior::rotate(Player* player, float orientation){
+    player->rotateTo(orientation);
+}
+
 WorldMap* Behavior::getWorldMap(){
     return _wp;
 }

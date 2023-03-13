@@ -23,7 +23,6 @@
 #include "src/team/behavior.h"
 #include "src/team/chaser.h"
 #include "src/team/predictor.h"
-#include <QDebug>
 
 Coach::Coach(const QMap<bool, QList<Player*>>& players, WorldMap* worldMap)
     : _players(players), _worldMap(worldMap)
@@ -55,7 +54,7 @@ WorldMap* Coach::getWorldMap() {
 
 void Coach::runCoach() {
 
-    Chaser jogador1(getPlayer(YELLOW, 0).value(), getWorldMap());
+    Chaser jogador1(getPlayer(BLUE, 0).value(), getWorldMap());
     jogador1.run();
 
 }
