@@ -20,13 +20,14 @@ void Chaser::run(){
     wp->playingLeftSide() ? a = -1 : a = 1;
 
     QVector2D ball = wp->ballPosition();
+    QVector2D zero(0,0);
 
     float width_goal = wp->goalWidth();
     float width = wp->width();
     //Distância da parte superior até a bola
     float distY = width/2 - ball.y();
     float radius = wp->centerRadius();
-    QVector2D dir_Goal = (wp->theirGoalCenter() - ball) / (wp->theirGoalCenter() - ball).distanceToPoint(ball);
+    QVector2D dir_Goal = (wp->theirGoalCenter() - ball) / (wp->theirGoalCenter() - ball).distanceToPoint(zero);
 
     //Distância da bola até o player
     float dist_PB[2] = {chaser->getPosition().x() - ball.x(), chaser->getPosition().y() - ball.y()};
@@ -53,14 +54,13 @@ void Chaser::run(){
 
             float player_y = chaser->getPosition().y();
             if((abs(player_y) < width_goal) && !(abs(player_y) < 0.06)){
-                qDebug() << "Teste";
                 go(chaser, ball - dir_Goal * radius * 0.6);
-                //rotate(chaser, ball);
             }else state = ST_Rotate;
 
         break;
         }
 
+        //Rotacionar o jogador em direção da bola
         case ST_Rotate: {
 
             float chaser_ori = tan(chaser->getOrientation());
@@ -76,8 +76,9 @@ void Chaser::run(){
         case ST_Goal: {
 
             go(chaser, ball);
-
-            if((ball - chaser->getPosition()).distanceToPoint(chaser->getPosition()) > 3 * radius)
+            QVector2D chaserPos(chaser->getPosition());
+            qDebug() << (-a * chaserPos.x() > -a * wp->theirGoalCenter().x());
+            if((ball - chaserPos).distanceToPoint(zero) > 2 * radius || -a * chaserPos.x() > -a * wp->theirGoalCenter().x())
                 state = ST_Back;
 
         break;
