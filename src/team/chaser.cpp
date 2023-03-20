@@ -2,6 +2,8 @@
 #include <QtMath>
 #include <QDebug>
 
+#define ang_pp (11 * M_PI / 180)
+
 void Chaser::run(){
 
     typedef enum{
@@ -20,9 +22,6 @@ void Chaser::run(){
     QVector2D ball = wp->ballPosition();
     QVector2D zero(0,0);
 
-    float width = wp->width();
-    //Distância da parte superior até a bola
-    float distY = width/2 - ball.y();
     float radius = wp->centerRadius();
     QVector2D dir_Goal = (wp->theirGoalCenter() - ball) / (wp->theirGoalCenter() - ball).distanceToPoint(zero);
 
@@ -35,15 +34,21 @@ void Chaser::run(){
         //Vai atrás da bola
         case ST_Search: {
 
-            if(distY > width/2) go(chaser, ball + QVector2D(a * radius, radius));
-            else if(distY < width/2) go(chaser, ball + QVector2D(a * radius, -radius));
-            else{
-                if(width/2 - chaser->getPosition().y() > width/2) go(chaser, ball + QVector2D(a * radius, -radius));
-                else go(chaser, ball + QVector2D(a * radius, radius));
+            QVector2D PB(ball - chaser->getPosition());
+            float ang = qAtan(PB.y()/PB.x());
+            qDebug() << "Vetor: " << PB << "Angulo: " << ang        ;
+            bool behind = chaser->getPosition().x() * a > ball.x() * a;
+
+            if(behind && abs(ang) < (M_PI / 12) && PB.distanceToPoint(zero) < radius * 1.6  )
+                state = ST_Ajust;
+            else if((ang >= 0 && !behind) || (ang < 0 && behind)){
+                go(chaser, ball + QVector2D(qCos(ang + ang_pp) * qPow(-1, behind), qSin(ang + ang_pp)) * radius * 1.5);
+                qDebug() << "Aqui miseria";
             }
-
-            if(((dist_PB[0] * a > radius * 0.8) && (dist_PB[0] * a < radius * 1.2)) && (abs(dist_PB[1]) < radius * 1.2)) state = ST_Ajust;
-
+            else if((ang < 0 && !behind) || (ang >= 0 && behind)){
+                go(chaser, ball + QVector2D(qCos(ang - ang_pp) * qPow(-1, behind), qSin(ang - ang_pp)) * radius * 1.5);
+                qDebug() << "Agora agui";
+            }
         break;
         }
 
@@ -77,7 +82,8 @@ void Chaser::run(){
 
             go(chaser, ball);
             QVector2D chaserPos(chaser->getPosition());
-            if((ball - chaserPos).distanceToPoint(zero) > 2 * radius || -a * chaserPos.x() > -a * wp->theirGoalCenter().x())
+            if(chaserPos.x() * a < ball.x() * a) state = ST_Search;
+            else if((ball - chaserPos).distanceToPoint(zero) > 2 * radius || -a * chaserPos.x() > -a * wp->theirGoalCenter().x())
                 state = ST_Back;
 
         break;
