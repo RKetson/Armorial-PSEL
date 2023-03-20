@@ -36,17 +36,17 @@ void Chaser::run(){
 
             QVector2D PB(ball - chaser->getPosition());
             float ang = qAtan(PB.y()/PB.x());
-            qDebug() << "Vetor: " << PB << "Angulo: " << ang        ;
+            qDebug() << "Vetor: " << PB << "Angulo: " << ang;
             bool behind = chaser->getPosition().x() * a > ball.x() * a;
 
-            if(behind && abs(ang) < (M_PI / 12) && PB.distanceToPoint(zero) < radius * 1.6  )
+            if(behind && abs(ang) < (M_PI / 12) && PB.distanceToPoint(zero) < radius * 1.2)
                 state = ST_Ajust;
             else if((ang >= 0 && !behind) || (ang < 0 && behind)){
-                go(chaser, ball + QVector2D(qCos(ang + ang_pp) * qPow(-1, behind), qSin(ang + ang_pp)) * radius * 1.5);
+                go(chaser, ball + QVector2D(qCos(ang + ang_pp) * qPow(-1, behind), qSin(ang + ang_pp)) * radius);
                 qDebug() << "Aqui miseria";
             }
             else if((ang < 0 && !behind) || (ang >= 0 && behind)){
-                go(chaser, ball + QVector2D(qCos(ang - ang_pp) * qPow(-1, behind), qSin(ang - ang_pp)) * radius * 1.5);
+                go(chaser, ball + QVector2D(qCos(ang - ang_pp) * qPow(-1, behind), qSin(ang - ang_pp)) * radius);
                 qDebug() << "Agora agui";
             }
         break;

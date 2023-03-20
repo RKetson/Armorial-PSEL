@@ -4,7 +4,7 @@
 void Predictor::run()
 {
     typedef enum{
-        ST_Search = 0, ST_Ajust, ST_Rotate, ST_Shot
+        ST_Search = 0, ST_Ajust, ST_Rotate, ST_Shoot
     } States;
 
     static States state = ST_Search;
@@ -43,12 +43,12 @@ void Predictor::run()
         //Ajusta a posição do jogador antes do chute
         case ST_Ajust: {
             go(predictor, ball + QVector2D(a * radius, 0));
-            if(a * predictor->getPosition().x() > ball.x() + a * radius * 0.8) state = ST_Shot;
+            if(a * predictor->getPosition().x() > a * (ball.x() + radius * 0.8)) state = ST_Shoot;
         break;
         }
 
         //Chutar a bola
-        case ST_Shot: {
+        case ST_Shoot: {
             go(predictor, ball);
             if(a * ball.x() < 0) state = ST_Search;
         break;
