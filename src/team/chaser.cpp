@@ -53,7 +53,7 @@ void Chaser::run(){
             QVector2D ajust_Pos(chaser->getPosition() - ball);
             if(ajust_Pos.distanceToPoint(zero) > radius * 0.6 && ajust_Pos.distanceToPoint(zero) < radius * 0.8){
                 float frac = -(dir_Goal.y() * radius / qSqrt(2)) / ajust_Pos.y();
-                if((frac < 0.8 && frac > 0.6) || (1/frac < 0.8 && 1/frac > 0.6) || frac < 0.03) state = ST_Rotate;
+                if((frac < 0.8 && frac > 0.6) || (1/frac < 0.8 && 1/frac > 0.6) || (abs(chaser->getPosition().y()) < 0.03 && abs(ball.y()) < 0.03)) state = ST_Goal;
                 else go(chaser, ball - dir_Goal * radius * 0.7);
             }else go(chaser, ball - dir_Goal * radius * 0.7);
 
@@ -63,9 +63,8 @@ void Chaser::run(){
         //Rotacionar o jogador em direção da bola
         case ST_Rotate: {
 
-            float chaser_ori = tan(chaser->getOrientation());
-            float pb_ori = tan(dist_PB[1] / dist_PB[0]);
-            //qDebug() << chaser_ori << pb_ori;
+            float chaser_ori = abs(tan(chaser->getOrientation()));
+            float pb_ori = abs(tan(dist_PB[1] / dist_PB[0]));
             if(pb_ori / chaser_ori < 1.2 && pb_ori / chaser_ori > 0.8)
                 state = ST_Goal;
             else rotate(chaser, ball);
