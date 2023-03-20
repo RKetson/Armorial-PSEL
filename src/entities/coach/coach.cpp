@@ -55,6 +55,9 @@ WorldMap* Coach::getWorldMap() {
 void Coach::runCoach() {
 
     Chaser jogador1(getPlayer(BLUE, 0).value(), getWorldMap());
+    Predictor jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
+
     jogador1.run();
+    jogador2.run();
 
 }

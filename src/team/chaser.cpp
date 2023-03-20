@@ -52,7 +52,8 @@ void Chaser::run(){
 
             QVector2D ajust_Pos(chaser->getPosition() - ball);
             if(ajust_Pos.distanceToPoint(zero) > radius * 0.6 && ajust_Pos.distanceToPoint(zero) < radius * 0.8){
-                float frac = -(dir_Goal.y() * radius / qSqrt(2)) / ajust_Pos.y();
+                float frac = -(dir_Goal.y() * radius * 0.7 / qSqrt(2)) / ajust_Pos.y();
+                qDebug() << "Ajust Chaser: " << frac;
                 if((frac < 0.8 && frac > 0.6) || (1/frac < 0.8 && 1/frac > 0.6) || (abs(chaser->getPosition().y()) < 0.03 && abs(ball.y()) < 0.03)) state = ST_Goal;
                 else go(chaser, ball - dir_Goal * radius * 0.7);
             }else go(chaser, ball - dir_Goal * radius * 0.7);
