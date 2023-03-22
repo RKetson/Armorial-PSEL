@@ -44,6 +44,7 @@ SOURCES += \
         src/entities/worldmap/worldmap.cpp \
         src/team/behavior.cpp \
         src/team/chaser.cpp \
+        src/team/dribbler.cpp \
         src/team/predictor.cpp \
         src/utils/types/robotcontrolpacket/robotcontrolpacket.cpp \
         src/utils/types/robotdetectionpacket/robotdetectionpacket.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     src/entities/worldmap/worldmap.h \
     src/team/behavior.h \
     src/team/chaser.h \
+    src/team/dribbler.h \
     src/team/predictor.h \
     src/utils/types/robotcontrolpacket/robotcontrolpacket.h \
     src/utils/types/robotdetectionpacket/robotdetectionpacket.h \

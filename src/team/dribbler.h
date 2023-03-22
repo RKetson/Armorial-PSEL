@@ -1,13 +1,13 @@
-#ifndef CHASER_H
-#define CHASER_H
+#ifndef DRIBBLER_H
+#define DRIBBLER_H
 
 #include "behavior.h"
 
-class Chaser : public Behavior
+class Dribbler : public Behavior
 {
 public:
     using Behavior::Behavior;
     void run(uint8_t a);
 };
 
-#endif // CHASER_H
+#endif // DRIBBLER_H

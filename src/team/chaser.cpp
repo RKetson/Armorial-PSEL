@@ -4,7 +4,7 @@
 
 #define ang_pp (11 * M_PI / 180)
 
-void Chaser::run(){
+void Chaser::run(uint8_t a){
 
     typedef enum{
         ST_Search = 0, ST_Ajust, ST_Rotate, ST_Goal, ST_Back
@@ -12,12 +12,8 @@ void Chaser::run(){
 
     static States state = ST_Search;
 
-    int a;
     WorldMap* wp = getWorldMap();
     Player* chaser = getPlayer();
-
-    // Indica qual lado do jogo estamos jogando
-    wp->playingLeftSide() ? a = -1 : a = 1;
 
     QVector2D ball = wp->ballPosition();
     QVector2D zero(0,0);

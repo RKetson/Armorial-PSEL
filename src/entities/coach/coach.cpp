@@ -54,10 +54,15 @@ WorldMap* Coach::getWorldMap() {
 
 void Coach::runCoach() {
 
+    WorldMap *wp = getWorldMap();
     Chaser jogador1(getPlayer(BLUE, 0).value(), getWorldMap());
     Predictor jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
 
-    jogador1.run();
-    jogador2.run();
+    uint8_t a;
+    // Indica qual lado do jogo estamos jogando
+    wp->playingLeftSide() ? a = -1 : a = 1;
+
+    jogador1.run(a);
+    jogador2.run(a);
 
 }
