@@ -7,7 +7,9 @@ class Dribbler : public Behavior
 {
 public:
     using Behavior::Behavior;
-    void run(uint8_t a);
+    bool run(int8_t a, QVector2D obstacle);
+
+    float radius = getWorldMap()->centerRadius();
 };
 
 #endif // DRIBBLER_H

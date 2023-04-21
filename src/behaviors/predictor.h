@@ -7,7 +7,7 @@ class Predictor: public Behavior
 {
 public:
     using Behavior::Behavior;
-    void run(uint8_t a);
+    void run(int8_t a, float linha_defesa, float posRobo);
 
 };
 

@@ -20,9 +20,16 @@
  ***/
 
 #include "coach.h"
-#include "src/team/behavior.h"
-#include "src/team/chaser.h"
-#include "src/team/predictor.h"
+#include "src/roles/goalkeeper.h"
+#include "src/behaviors/behavior.h"
+#include "src/behaviors/chaser.h"
+#include "src/behaviors/predictor.h"
+#include "src/behaviors/dribbler.h"
+#include "src/roles/centerforward.h"
+
+#include "src/utils/utils.h"
+#include <QDebug>
+#include <QtMath>
 
 Coach::Coach(const QMap<bool, QList<Player*>>& players, WorldMap* worldMap)
     : _players(players), _worldMap(worldMap)
@@ -52,13 +59,24 @@ WorldMap* Coach::getWorldMap() {
     return _worldMap;
 }
 
+QMap<bool, QList<Player*>> Coach::getPlayers(){
+    return _players;
+}
+
 void Coach::runCoach() {
 
     WorldMap *wp = getWorldMap();
-    Chaser jogador1(getPlayer(BLUE, 0).value(), getWorldMap());
-    Predictor jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
+    Goalkeeper jogador1(getPlayer(BLUE, 0).value(), getWorldMap());
+    jogador1.setListPlayers(getPlayers());
 
-    uint8_t a;
+    CenterForward jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
+    //Dribbler jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
+
+    //float ang = Utils::getAngle(wp->ballPosition(), getPlayer(BLUE,0).value()->getPosition());
+
+    //qDebug() << ang << Utils::normalizeAngle(ang) << qSin(ang) << qCos(ang);
+
+    int8_t a;
     // Indica qual lado do jogo estamos jogando
     wp->playingLeftSide() ? a = -1 : a = 1;
 
