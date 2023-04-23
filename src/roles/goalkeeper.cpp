@@ -1,11 +1,5 @@
 #include "goalkeeper.h"
-#include "src/behaviors/dribbler.h"
-#include "src/behaviors/predictor.h"
 #include <QDebug>
-
-void Goalkeeper::setListPlayers(const QMap<bool, QList<Player*>>& Players){
-    _players = Players;
-}
 
 void Goalkeeper::run(int8_t a)
 {
@@ -19,6 +13,7 @@ void Goalkeeper::run(int8_t a)
     QVector2D ball = wp->ballPosition();
     QVector2D def_line = zero;
     QVector2D gk = getPlayer()->getPosition();
+    float radius = wp->centerRadius();
 
     static Player* detour_P;
     static bool obj_detour;
@@ -34,7 +29,10 @@ void Goalkeeper::run(int8_t a)
                 for(int i = 0; i <= 1; i++){
                     for(const auto& player : _players.value(i)){
                         if((player->isTeamBlue() != getPlayer()->isTeamBlue()) || (player->getPlayerId() != getPlayer()->getPlayerId())){
-                            if((gk - player->getPosition()).distanceToPoint(zero) < wp->centerRadius()){
+                            float ang_pp = Utils::getAngle(gk, player->getPosition());
+                            float ang_pb = Utils::getAngle(gk, ball);
+                            qDebug() << player->isTeamBlue() << player->getPlayerId() << ang_pp << ang_pb;
+                            if((gk - player->getPosition()).distanceToPoint(zero) < wp->centerRadius() && (ang_pp < ang_pb + M_PI / 4 && ang_pp > ang_pb - M_PI / 4)){
                                 detour_P = player;
                                 obj_detour = 1;
                                 detour = (gk.x() * a > ball.x() * a ? 1 * a : -1 * a);
@@ -55,7 +53,7 @@ void Goalkeeper::run(int8_t a)
         break;
         }
         case ST_Detour:{
-            if((obj_detour ? Dribbler(getPlayer(), wp).run(detour, detour_P->getPosition()) : Dribbler(getPlayer(), wp).run(detour, wp->ballPosition())))
+            if((obj_detour ? Dribbler(getPlayer(), wp).run(detour, detour_P->getPosition(), radius) : Dribbler(getPlayer(), wp).run(detour, wp->ballPosition(), radius)))
                 state = ST_Search;
         break;
         }

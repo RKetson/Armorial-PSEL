@@ -5,10 +5,10 @@
 
 class Predictor: public Behavior
 {
+
 public:
     using Behavior::Behavior;
     void run(int8_t a, float linha_defesa, float posRobo);
-
 };
 
 #endif // PREDICTOR_H

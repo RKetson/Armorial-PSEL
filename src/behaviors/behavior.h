@@ -17,6 +17,7 @@ public:
     QVector2D zero = QVector2D(0, 0);
 
 protected:
+    friend class Roles;
     void go(Player* player, QVector2D targetPosition);
     void rotate(Player* player, QVector2D targetPosition);
     void rotate(Player* player, float orientation);

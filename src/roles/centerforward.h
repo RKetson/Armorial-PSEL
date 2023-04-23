@@ -1,14 +1,12 @@
 #ifndef CENTERFORWARD_H
 #define CENTERFORWARD_H
 
-#include "src/behaviors/behavior.h"
-#include "src/behaviors/chaser.h"
-#include "src/behaviors/predictor.h"
+#include "src/roles/roles.h"
 
-class CenterForward : Behavior
+class CenterForward : public Roles
 {
 public:
-    using Behavior::Behavior;
+    using Roles::Roles;
     void run(int8_t a);
 };
 

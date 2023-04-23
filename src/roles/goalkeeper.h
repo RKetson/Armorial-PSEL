@@ -1,16 +1,13 @@
 #ifndef GOALKEEPER_H
 #define GOALKEEPER_H
 
-#include "src/behaviors/behavior.h"
+#include "src/roles/roles.h"
 
-class Goalkeeper : Behavior
+class Goalkeeper : public Roles
 {
 public:
-    using Behavior::Behavior;
+    using Roles::Roles;
     void run(int8_t a);
-    void setListPlayers(const QMap<bool, QList<Player*>>& Players);
-private:
-    QMap<bool, QList<Player*>> _players;
 };
 
 #endif // GOALKEEPER_H

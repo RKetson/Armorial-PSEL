@@ -49,6 +49,7 @@ SOURCES += \
         src/roles/centerforward.cpp \
         src/roles/forward.cpp \
         src/roles/goalkeeper.cpp \
+        src/roles/roles.cpp \
         src/utils/types/robotcontrolpacket/robotcontrolpacket.cpp \
         src/utils/types/robotdetectionpacket/robotdetectionpacket.cpp \
         src/utils/utils.cpp
@@ -75,6 +76,7 @@ HEADERS += \
     src/roles/centerforward.h \
     src/roles/forward.h \
     src/roles/goalkeeper.h \
+    src/roles/roles.h \
     src/utils/types/robotcontrolpacket/robotcontrolpacket.h \
     src/utils/types/robotdetectionpacket/robotdetectionpacket.h \
     src/utils/utils.h
