@@ -21,10 +21,9 @@ void Predictor::run(int8_t a, float linha_defesa, float posRobo)
 
         //Vai atrás da bola
         case ST_Search: {
-            //Obs: Mudar lógica fazendo uso de frac para uso de ângulo
             float frac = (wp->maxX() - posRobo) * a / predictor->getPosition().x();
             qDebug() << "Search Predictor: " << frac;
-            if(a * ball.x() > linha_defesa)
+            if(a * ball.x() > linha_defesa * a)
                 state = ST_Ajust;
             else if(!(frac > 0.8 && frac < 1.2)) go(predictor, QVector2D((wp->maxX() - posRobo) * a, 0));
             else state = ST_Rotate;
@@ -34,7 +33,7 @@ void Predictor::run(int8_t a, float linha_defesa, float posRobo)
         //Rotacionar o robô em direção da bola
         case ST_Rotate:{
             rotate(predictor, ball);
-            if(a * ball.x() > linha_defesa) state = ST_Search;
+            if(a * ball.x() > linha_defesa * a) state = ST_Search;
         break;
         }
 
@@ -48,7 +47,7 @@ void Predictor::run(int8_t a, float linha_defesa, float posRobo)
         //Chutar a bola
         case ST_Shoot: {
             go(predictor, ball);
-            if(a * ball.x() < linha_defesa) state = ST_Search;
+            if(a * ball.x() < linha_defesa * a) state = ST_Search;
         break;
         }
     }

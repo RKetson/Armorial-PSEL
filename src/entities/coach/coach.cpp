@@ -63,35 +63,23 @@ QMap<bool, QList<Player*>> Coach::getPlayers(){
 void Coach::runCoach() {
 
     WorldMap *wp = getWorldMap();
-    //Goalkeeper jogador1(getPlayer(BLUE, 0).value(), getWorldMap());
-    //jogador1.setListPlayers(getPlayers());
-
-    CenterForward jogador3(getPlayer(BLUE, 2).value(), getWorldMap());
-    jogador3.setListPlayers(getPlayers());
-
-    //Forward jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
-    //jogador2.setListPlayers(getPlayers());
-
-    //Dribbler jogador2(getPlayer(BLUE, 1).value(), getWorldMap());
-
-    //float ang = Utils::getAngle(wp->ballPosition(), getPlayer(BLUE,0).value()->getPosition());
-
-    //qDebug() << ang << Utils::normalizeAngle(ang) << qSin(ang) << qCos(ang);
 
     int8_t a;
     // Indica qual lado do jogo estamos jogando
     wp->playingLeftSide() ? a = -1 : a = 1;
-    //QVector2D ball = wp->ballPosition();
-//    float radius = wp->centerRadius();
 
-//    QVector2D dir_Goal = (wp->theirGoalCenter() - ball) / (wp->theirGoalCenter() - ball).distanceToPoint(QVector2D(0,0));
+    //Goalkeeper jogador0(getPlayer(BLUE, 0).value(), wp);
+    //jogador0.setListPlayers(getPlayers());
 
-//    qDebug() << dir_Goal << (wp->theirGoalCenter() - ball).distanceToPoint(QVector2D(0,0));
+    Forward jogador1(getPlayer(BLUE, 1).value(), wp);
+    jogador1.setListPlayers(getPlayers());
 
-//    getPlayer(BLUE, 1).value()->goTo(ball - QVector2D(dir_Goal.x(), dir_Goal.y()) * radius * 0.7);
+    //CenterForward jogador2(getPlayer(BLUE, 2).value(), wp);
+    //jogador2.setListPlayers(getPlayers());
 
-    //jogador1.run(a);
+
+    //jogador0.run(a);
+    jogador1.run(a);
     //jogador2.run(a);
-    jogador3.run(a);
 
 }

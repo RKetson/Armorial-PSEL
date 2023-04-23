@@ -23,6 +23,8 @@ void CenterForward::run(int8_t a){
     qDebug() << detour;
 
     switch (state) {
+
+    // Verifica se existe algum obstáculo e seleciona o behavior de acordo com sua posição
         case ST_Search:{
             for(int i = 0; i <= 1; i++){
                 for(const auto& player : _players.value(i)){
@@ -51,18 +53,13 @@ void CenterForward::run(int8_t a){
 
         break;
         }
+
+        // Se algum obstáculo for encontra, desvia do mesmo antes de alguma ação
         case ST_Detour:{
-            if((obj_detour ? Dribbler(getPlayer(), wp).run(detour, detour_P->getPosition(), radius) : Dribbler(getPlayer(), wp).run(detour, wp->ballPosition(), radius)))
+            if((obj_detour ? Dribbler(getPlayer(), wp).run(detour, detour_P->getPosition(), radius) : Dribbler(getPlayer(), wp).run(detour, wp->ballPosition(), radius, -detour*radius*0.6)))
                 state = ST_Search;
         break;
         }
     }
-
-
-
-//    if((ball.x() * a >= -(wp->maxX() - radius*1.5)) && (ball.x() * a <= zero.x()))
-//        Chaser(getPlayer(), wp).run(a);
-//    else
-//        Predictor(getPlayer(), wp).run(a, def_line.x(), radius * 1.5);
 
 }

@@ -7,7 +7,7 @@ class Dribbler : public Behavior
 {
 public:
     using Behavior::Behavior;
-    bool run(int8_t a, QVector2D obstacle, float radius);
+    bool run(int8_t a, QVector2D obstacle, float radius, float step = 0);
 };
 
 #endif // DRIBBLER_H

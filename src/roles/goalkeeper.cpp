@@ -16,6 +16,9 @@ void Goalkeeper::run(int8_t a)
     float radius = wp->centerRadius();
 
     static Player* detour_P;
+
+    // obj_detour = 1  ->  Desvia de um jogador
+    // obj_detour = 0  ->  Desvia da bola
     static bool obj_detour;
 
     static int8_t detour;
@@ -23,6 +26,8 @@ void Goalkeeper::run(int8_t a)
     qDebug() << detour;
 
     switch (state) {
+
+        // Verifica se existe algum obstáculo e seleciona o behavior de acordo com sua posição
         case ST_Search:{
 
             if(ball.x() * a > def_line.x() * a){
@@ -52,8 +57,10 @@ void Goalkeeper::run(int8_t a)
 
         break;
         }
+
+        // Se algum obstáculo for encontra, desvia do mesmo antes de alguma ação
         case ST_Detour:{
-            if((obj_detour ? Dribbler(getPlayer(), wp).run(detour, detour_P->getPosition(), radius) : Dribbler(getPlayer(), wp).run(detour, wp->ballPosition(), radius)))
+            if((obj_detour ? Dribbler(getPlayer(), wp).run(detour, detour_P->getPosition(), radius) : Dribbler(getPlayer(), wp).run(detour, wp->ballPosition(), radius, -detour*radius*0.6)))
                 state = ST_Search;
         break;
         }

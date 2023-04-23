@@ -31,12 +31,11 @@ void Chaser::run(int8_t a){
             QVector2D ajust_Pos(chaser->getPosition() - ball);
             abs((ball - dir_Goal * radius * 1.3).y()) > wp->maxY() ? const_mult = 0.7 : const_mult = 1.6;
 
-            // Obs: Implementar ajuste de ângulo melhor, fazendo uso de Utils::getAngles
-            //ajust_Pos.distanceToPoint(zero) > radius * (const_mult - 0.1) &&
             if(ajust_Pos.distanceToPoint(zero) < radius * (const_mult + 0.1)){
-                float frac = -(dir_Goal.y() * radius * const_mult / qSqrt(2)) / ajust_Pos.y();
-                qDebug() << "Ajust Chaser: " << frac;
-                if((frac < (const_mult + 0.1) && frac > (const_mult - 0.1)) || (1/frac < (const_mult + 0.1) && 1/frac > (const_mult - 0.1)) || (abs(chaser->getPosition().y()) < 0.03 && abs(ball.y()) < 0.03)) state = ST_Goal;
+                float ang_pb = Utils::getAngle(chaser->getPosition(), ball);
+                float ang_dist = Utils::getAngle(chaser->getPosition(), wp->theirGoalCenter());
+
+                if(ang_pb < ang_dist + M_PI/12 && ang_pb > ang_dist - M_PI/12) state = ST_Goal;
                 else{
                     qDebug() << "Ajeitando";
                     go(chaser, (ball - dir_Goal * radius * const_mult));
