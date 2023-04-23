@@ -58,6 +58,8 @@ protected:
      */
     std::optional<Player*> getPlayer(const bool& isTeamBlue, const quint8& playerId);
 
+    QMap<bool, QList<Player*>> getPlayers();
+
     /*!
      * \return Return WorldMap pointer.
      */

@@ -42,9 +42,14 @@ SOURCES += \
         src/entities/player/player.cpp \
         src/entities/vision/vision.cpp \
         src/entities/worldmap/worldmap.cpp \
-        src/team/behavior.cpp \
-        src/team/chaser.cpp \
-        src/team/predictor.cpp \
+        src/behaviors/behavior.cpp \
+        src/behaviors/chaser.cpp \
+        src/behaviors/dribbler.cpp \
+        src/behaviors/predictor.cpp \
+        src/roles/centerforward.cpp \
+        src/roles/forward.cpp \
+        src/roles/goalkeeper.cpp \
+        src/roles/roles.cpp \
         src/utils/types/robotcontrolpacket/robotcontrolpacket.cpp \
         src/utils/types/robotdetectionpacket/robotdetectionpacket.cpp \
         src/utils/utils.cpp
@@ -64,9 +69,14 @@ HEADERS += \
     src/entities/player/player.h \
     src/entities/vision/vision.h \
     src/entities/worldmap/worldmap.h \
-    src/team/behavior.h \
-    src/team/chaser.h \
-    src/team/predictor.h \
+    src/behaviors/behavior.h \
+    src/behaviors/chaser.h \
+    src/behaviors/dribbler.h \
+    src/behaviors/predictor.h \
+    src/roles/centerforward.h \
+    src/roles/forward.h \
+    src/roles/goalkeeper.h \
+    src/roles/roles.h \
     src/utils/types/robotcontrolpacket/robotcontrolpacket.h \
     src/utils/types/robotdetectionpacket/robotdetectionpacket.h \
     src/utils/utils.h
