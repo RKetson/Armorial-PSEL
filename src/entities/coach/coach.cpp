@@ -68,18 +68,18 @@ void Coach::runCoach() {
     // Indica qual lado do jogo estamos jogando
     wp->playingLeftSide() ? a = -1 : a = 1;
 
-    //Goalkeeper jogador0(getPlayer(BLUE, 0).value(), wp);
-    //jogador0.setListPlayers(getPlayers());
+    Goalkeeper jogador0(getPlayer(BLUE, 0).value(), wp);
+    jogador0.setListPlayers(getPlayers());
 
-    Forward jogador1(getPlayer(BLUE, 1).value(), wp);
+    CenterForward jogador1(getPlayer(BLUE, 1).value(), wp);
     jogador1.setListPlayers(getPlayers());
 
-    //CenterForward jogador2(getPlayer(BLUE, 2).value(), wp);
-    //jogador2.setListPlayers(getPlayers());
+    Forward jogador2(getPlayer(BLUE, 2).value(), wp);
+    jogador2.setListPlayers(getPlayers());
 
 
-    //jogador0.run(a);
+    jogador0.run(a);
     jogador1.run(a);
-    //jogador2.run(a);
+    jogador2.run(a);
 
 }

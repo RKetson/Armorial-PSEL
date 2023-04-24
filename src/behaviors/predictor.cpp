@@ -22,7 +22,7 @@ void Predictor::run(int8_t a, float linha_defesa, float posRobo)
         //Vai atrás da bola
         case ST_Search: {
             float frac = (wp->maxX() - posRobo) * a / predictor->getPosition().x();
-            qDebug() << "Search Predictor: " << frac;
+            //qDebug() << "Search Predictor: " << frac;
             if(a * ball.x() > linha_defesa * a)
                 state = ST_Ajust;
             else if(!(frac > 0.8 && frac < 1.2)) go(predictor, QVector2D((wp->maxX() - posRobo) * a, 0));

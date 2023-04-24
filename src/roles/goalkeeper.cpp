@@ -23,7 +23,7 @@ void Goalkeeper::run(int8_t a)
 
     static int8_t detour;
 
-    qDebug() << detour;
+    //qDebug() << detour;
 
     switch (state) {
 
@@ -36,7 +36,7 @@ void Goalkeeper::run(int8_t a)
                         if((player->isTeamBlue() != getPlayer()->isTeamBlue()) || (player->getPlayerId() != getPlayer()->getPlayerId())){
                             float ang_pp = Utils::getAngle(gk, player->getPosition());
                             float ang_pb = Utils::getAngle(gk, ball);
-                            qDebug() << player->isTeamBlue() << player->getPlayerId() << ang_pp << ang_pb;
+                            //qDebug() << player->isTeamBlue() << player->getPlayerId() << ang_pp << ang_pb;
                             if((gk - player->getPosition()).distanceToPoint(zero) < wp->centerRadius() && (ang_pp < ang_pb + M_PI / 4 && ang_pp > ang_pb - M_PI / 4)){
                                 detour_P = player;
                                 obj_detour = 1;

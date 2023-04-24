@@ -10,18 +10,14 @@
 bool Dribbler::run(int8_t a, QVector2D obstacle, float radius, float step)
 {
     QVector2D dribbler = getPlayer()->getPosition();
+    QVector2D ball = getWorldMap()->ballPosition();
 
-    qDebug() << "*************************************";
-    QVector2D PO(obstacle - dribbler);
     float ang_op = Utils::getAngle(obstacle, dribbler);
-    qDebug() << "Vetor: " << PO << "Angulo: " << ang_op;
-
     float ang_po = Utils::getAngle(dribbler, obstacle);
-    float ang_pb = Utils::getAngle(dribbler, QVector2D(getWorldMap()->ballPosition().x() + step, getWorldMap()->ballPosition().y()));
-    if(!(ang_po < ang_pb + M_PI/3 && ang_po > ang_pb - M_PI/3)){
-        qDebug() << "Retornou";
-        qDebug() << "*************************************";
-        qDebug() << dribbler;
+    float ang_pb = Utils::getAngle(dribbler, QVector2D(ball.x() + step, ball.y()));
+
+    int8_t mult = pow(-1, (dribbler.x() * a < obstacle.x() * a));
+    if(!(mult * ang_po < mult * (ang_pb + M_PI/4) && mult * ang_po > mult * (ang_pb - M_PI/4))){
         return true;
     }
     else if(ang_op >= 0){
@@ -30,6 +26,5 @@ bool Dribbler::run(int8_t a, QVector2D obstacle, float radius, float step)
     else{
         go(getPlayer(), obstacle + QVector2D(qCos(ang_op - a*ang_pp), qSin(ang_op - a*ang_pp)) * radius * 0.6);
     }
-    qDebug() << "*************************************";
     return false;
 }
