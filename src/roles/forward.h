@@ -5,9 +5,10 @@
 
 class Forward : public Roles
 {
+
 public:
     using Roles::Roles;
-    void run(int8_t a);
+    void run(int8_t a, Roles::States* state);
 };
 
 #endif // FORWARD_H

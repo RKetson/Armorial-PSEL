@@ -64,22 +64,26 @@ void Coach::runCoach() {
 
     WorldMap *wp = getWorldMap();
 
+    static Roles::States state_GK;
+    static Roles::States state_CF;
+    static Roles::States state_FW;
+
     int8_t a;
     // Indica qual lado do jogo estamos jogando
     wp->playingLeftSide() ? a = -1 : a = 1;
 
-    Goalkeeper jogador0(getPlayer(BLUE, 0).value(), wp);
-    jogador0.setListPlayers(getPlayers());
+    Forward* jogador0 = new Forward(getPlayer(BLUE, 0).value(), wp);
+    jogador0->setListPlayers(getPlayers());
 
-    CenterForward jogador1(getPlayer(BLUE, 1).value(), wp);
-    jogador1.setListPlayers(getPlayers());
+    CenterForward* jogador1 = new CenterForward(getPlayer(BLUE, 1).value(), wp);
+    jogador1->setListPlayers(getPlayers());
 
-    Forward jogador2(getPlayer(BLUE, 2).value(), wp);
-    jogador2.setListPlayers(getPlayers());
+    Goalkeeper* jogador2 = new Goalkeeper(getPlayer(BLUE, 2).value(), wp);
+    jogador2->setListPlayers(getPlayers());
 
 
-    jogador0.run(a);
-    jogador1.run(a);
-    jogador2.run(a);
+    jogador0->run(a, &state_FW);
+    jogador1->run(a, &state_CF);
+    jogador2->run(a, &state_GK);
 
 }

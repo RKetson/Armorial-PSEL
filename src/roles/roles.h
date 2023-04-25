@@ -9,10 +9,13 @@
 
 class Roles : public Behavior
 {
+
 public:
+
     using Behavior::Behavior;
-    void run(int8_t a);
+    void run(int8_t a, States* state);
     void setListPlayers(const QMap<bool, QList<Player*>>& Players);
+
 protected:
     QMap<bool, QList<Player*>> _players;
 };

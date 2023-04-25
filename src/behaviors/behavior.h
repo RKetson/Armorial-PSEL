@@ -8,6 +8,26 @@
 class Behavior
 {
 public:
+
+    typedef enum{
+        STD_Search = 0, STD_Detour
+    } States_Dribbler;
+
+    typedef enum{
+        STC_Ajust = 0, STC_Rotate, STC_Goal, STC_Back
+    } States_Chaser;
+
+    typedef enum{
+        STP_Search = 0, STP_Ajust, STP_Rotate, STP_Shoot
+    } States_Predictor;
+
+    typedef struct States
+    {
+        States_Dribbler ST_D = STD_Search;
+        States_Chaser ST_C = STC_Ajust;
+        States_Predictor ST_P = STP_Search;
+    } States;
+
     Behavior(Player* player, WorldMap* wp);
 
     void run();
